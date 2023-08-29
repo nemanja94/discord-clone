@@ -15,11 +15,11 @@ model Profile {
   imageUrl String
   email    String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   servers   Server[]
   sembers   Member[]
-  chanels   Chanel[]
+  channels  Channel[]
 }
 
 model Server {
@@ -34,8 +34,8 @@ model Server {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  members Member[]
-  chanels Chanel[]
+  members  Member[]
+  channels Channel[]
 
   @@index([profileId])
 }
@@ -63,16 +63,18 @@ model Member {
   @@index([serverId])
 }
 
-enum ChanelType {
+enum ChannelType {
   TEXT
   AUDIO
   VIDEO
+
+  @@map("ChannelType")
 }
 
-model Chanel {
-  id   String     @id @default(uuid())
+model Channel {
+  id   String      @id @default(uuid())
   name String
-  type ChanelType @default(TEXT)
+  type ChannelType @default(TEXT)
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
@@ -85,4 +87,5 @@ model Chanel {
 
   @@index([profileId])
   @@index([serverId])
+  @@map("Channel")
 }
